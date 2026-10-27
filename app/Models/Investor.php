@@ -6,9 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Investor extends Authenticatable
 {
-    protected $table = 'investor';
+    protected $table = 'investors';
     protected $primaryKey = 'id_investor';
-    public $timestamps = false;
 
     protected $fillable = [
         'username', 'password', 'nama_investor', 'dana_tersedia',
