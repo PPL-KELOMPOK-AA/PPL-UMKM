@@ -38,10 +38,10 @@ return [
     */
 
     'guards' => [
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        'web'        => ['driver' => 'session', 'provider' => 'users'],
+        'umkm'       => ['driver' => 'session', 'provider' => 'umkms'],
+        'investor'   => ['driver' => 'session', 'provider' => 'investors'],
+        'pemerintah' => ['driver' => 'session', 'provider' => 'pemerintahs'],
     ],
 
     /*
@@ -62,15 +62,10 @@ return [
     */
 
     'providers' => [
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', User::class),
-        ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+    'users'       => ['driver' => 'eloquent', 'model' => App\Models\User::class],
+    'umkms'       => ['driver' => 'eloquent', 'model' => App\Models\Umkm::class],
+    'investors'   => ['driver' => 'eloquent', 'model' => App\Models\Investor::class],
+    'pemerintahs' => ['driver' => 'eloquent', 'model' => App\Models\Pemerintah::class],
     ],
 
     /*
