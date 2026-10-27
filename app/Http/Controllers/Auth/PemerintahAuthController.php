@@ -9,13 +9,11 @@ use Illuminate\Support\Facades\Hash;
 
 class PemerintahAuthController extends Controller
 {
-    // Menampilkan halaman login
     public function showLogin()
     {
         return view('auth.pemerintah.login');
     }
 
-    // Memproses login
     public function login(Request $request)
     {
         $request->validate([
@@ -47,8 +45,6 @@ class PemerintahAuthController extends Controller
 
         return redirect()->route('pemerintah.dashboard');
     }
-
-    // Logout
     public function logout(Request $request)
     {
         $request->session()->invalidate();

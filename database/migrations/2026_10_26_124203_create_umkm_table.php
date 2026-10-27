@@ -10,7 +10,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('umkms', function (Blueprint $table) {
-            // Harus cocok dengan foreignId pada migration proposals
             $table->id('id_UMKM');
 
             $table->string('username', 255);

@@ -253,7 +253,7 @@
 <div class="auth-page">
     <main class="auth-shell">
 
-        {{-- PANEL KIRI --}}
+        {{-- KIRI --}}
         <section class="auth-intro">
 
             <div class="intro-main">
@@ -278,7 +278,7 @@
 
         </section>
 
-        {{-- PANEL KANAN: FORM REGISTER --}}
+        {{-- KANAN --}}
         <section class="auth-form-panel">
 
             <h2 class="form-heading">Buat Akun Investor</h2>

@@ -14,21 +14,16 @@ class UmkmAuthController extends Controller
         return view('auth.umkm.login');
     }
 
-    // Memproses login UMKM
     public function login(Request $request)
     {
-        // 1. Memeriksa input dari form
         $request->validate([
             'username' => ['required', 'string'],
             'password' => ['required', 'string'],
         ]);
-
-        // 2. Mencari akun UMKM berdasarkan username
         $umkm = DB::table('umkms')
             ->where('username', $request->username)
             ->first();
 
-        // 3. Memeriksa akun dan password
         if (!$umkm || !Hash::check($request->password, $umkm->password)) {
             return back()
                 ->withErrors([
@@ -37,7 +32,6 @@ class UmkmAuthController extends Controller
                 ->onlyInput('username');
         }
 
-        // 4. Membuat session login
         $request->session()->regenerate();
 
         $request->session()->put([
@@ -46,11 +40,9 @@ class UmkmAuthController extends Controller
             'auth_username' => $umkm->username,
         ]);
 
-        // 5. Mengarahkan pengguna ke dashboard UMKM
         return redirect()->route('umkm.dashboard');
     }
 
-    // Logout UMKM
     public function logout(Request $request)
     {
         $request->session()->invalidate();
@@ -59,14 +51,11 @@ class UmkmAuthController extends Controller
         return redirect()->route('login.pilih');
     }
 
-
-    // Menampilkan halaman registrasi UMKM
     public function showRegister()
     {
         return view('auth.umkm.register');
     }
 
-    // Memproses registrasi UMKM
     public function register(Request $request)
     {
         $request->validate([

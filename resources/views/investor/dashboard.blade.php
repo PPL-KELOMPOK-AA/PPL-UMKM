@@ -5,13 +5,13 @@
 
 @section('content')
 
-    {{-- JUDUL HALAMAN --}}
     <div class="page-heading">
         <h1>Selamat datang kembali!</h1>
         <p>Pantau peluang investasi dan temukan inovasi UMKM yang potensial.</p>
     </div>
 
-    {{-- PENGINGAT PROFIL --}}
+@if (empty($investor->dana_tersedia) || $investor->dana_tersedia <= 0)
+
     <div class="profile-alert">
         <div class="profile-alert-content">
             <div class="alert-icon">
@@ -27,14 +27,42 @@
             </div>
         </div>
 
-        {{-- Sementara menuju bagian profil --}}
-        <a href="#profil" class="btn-dashboard">
+        <a href="{{ route('investor.profil') }}" class="btn-dashboard">
             Lengkapi Profil
             <i class="bi bi-arrow-right"></i>
         </a>
     </div>
 
-    {{-- STATISTIK --}}
+@else
+
+    <div class="profile-alert">
+        <div class="profile-alert-content">
+            <div class="alert-icon">
+                <i class="bi bi-shield-check"></i>
+            </div>
+
+            <div>
+                <h3>Status Akun: {{ $investor->status_verifikasi ?? 'Belum Diketahui' }}</h3>
+                <p>
+                    @if (($investor->status_verifikasi ?? '') === 'Menunggu Verifikasi')
+                        Profil investasimu sedang menunggu verifikasi dari pemerintah.
+                    @elseif (($investor->status_verifikasi ?? '') === 'Terverifikasi')
+                        Profil investasimu telah terverifikasi. Kamu dapat melanjutkan aktivitas investasi.
+                    @else
+                        Silakan periksa informasi profil dan status akunmu.
+                    @endif
+                </p>
+            </div>
+        </div>
+
+        <a href="{{ route('investor.profil') }}" class="btn-dashboard">
+            Lihat Akun Saya
+            <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
+
+@endif
+
     <div class="section-heading">
         <div>
             <h2>Ringkasan Aktivitas</h2>
@@ -44,7 +72,6 @@
 
     <div class="row g-3 mb-4">
 
-        {{-- TOTAL INOVASI --}}
         <div class="col-12 col-md-6 col-xl-4">
             <div class="dashboard-card stat-card">
                 <div class="stat-top">
@@ -61,7 +88,6 @@
             </div>
         </div>
 
-        {{-- INOVASI BERJALAN --}}
         <div class="col-12 col-md-6 col-xl-4">
             <div class="dashboard-card stat-card">
                 <div class="stat-top">
@@ -78,7 +104,6 @@
             </div>
         </div>
 
-        {{-- INOVASI DENGAN PENAWARAN TERBANYAK --}}
         <div class="col-12 col-md-6 col-xl-4">
             <div class="dashboard-card stat-card">
                 <div class="stat-top">
@@ -97,7 +122,6 @@
 
     </div>
 
-    {{-- TABEL INOVASI --}}
     <div class="dashboard-card table-card">
 
         <div class="table-card-header">
@@ -124,7 +148,7 @@
                 </thead>
 
                 <tbody>
-                    {{-- Data akan dihubungkan ke database nanti --}}
+
                     <tr>
                         <td colspan="4">
                             <div class="empty-state">
