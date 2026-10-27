@@ -505,6 +505,11 @@
             color: #a8751b;
         }
 
+        .status-badge.rejected {
+            background: #fde8e8;
+            color: #bc2c2c;
+        }
+
         .empty-state {
             padding: 45px 20px;
             text-align: center;
@@ -678,6 +683,12 @@
        class="sidebar-link {{ request()->routeIs('pemerintah.dashboard') ? 'active' : '' }}">
         <i class="bi bi-grid-1x2"></i>
         <span>Dashboard</span>
+    </a>
+
+    <a href="{{ route('pemerintah.verifikasi.investor.index') }}"
+       class="sidebar-link {{ request()->routeIs('pemerintah.verifikasi.investor.*') ? 'active' : '' }}">
+        <i class="bi bi-shield-check"></i>
+        <span>Verifikasi Investor</span>
     </a>
 
     <a href="#verifikasi" class="sidebar-link">

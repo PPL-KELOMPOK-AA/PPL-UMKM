@@ -9,10 +9,11 @@ use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Investor\ProfilController;
-
+use App\Http\Controllers\Pemerintah\VerifikasiController;
 
 
 // ========================================== HALAMAN LOGIN AREA==========================================
+
 
 Route::get('/', function () {
     return view('auth.login', ['role' => 'investor']);
@@ -125,3 +126,13 @@ Route::get('/proposal/create', [ProposalController::class, 'create'])
 
 Route::post('/proposal/ajukan', [ProposalController::class, 'ajukanProposal'])
     ->name('proposal.ajukan');
+
+// ========================================== HALAMAN PEMERINTAH - VERIFIKASI INVESTOR (FR-14 / SCRUM-20) ==========================================
+Route::prefix('pemerintah')->name('pemerintah.')->group(function () {
+    Route::get('/verifikasi/investor', [VerifikasiController::class, 'indexInvestor'])
+        ->name('verifikasi.investor.index');
+    Route::get('/verifikasi/investor/{id}', [VerifikasiController::class, 'showInvestor'])
+        ->name('verifikasi.investor.show');
+    Route::put('/verifikasi/investor/{id}', [VerifikasiController::class, 'verifikasiInvestor'])
+        ->name('verifikasi.investor.update');
+});
