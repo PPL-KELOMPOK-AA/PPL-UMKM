@@ -10,13 +10,11 @@ use Illuminate\Validation\Rule;
 
 class InvestorAuthController extends Controller
 {
-    // Menampilkan halaman login investor
     public function showLogin()
     {
         return view('auth.investor.login');
     }
 
-    // Memproses login investor
     public function login(Request $request)
     {
         $request->validate([
@@ -50,13 +48,11 @@ class InvestorAuthController extends Controller
         return redirect()->route('investor.dashboard');
     }
 
-    // Menampilkan halaman registrasi investor
     public function showRegister()
     {
         return view('auth.investor.register');
     }
 
-    // Memproses registrasi investor
     public function register(Request $request)
     {
         $request->validate([
@@ -105,7 +101,6 @@ class InvestorAuthController extends Controller
             );
     }
 
-    // Logout investor
     public function logout(Request $request)
     {
         $request->session()->invalidate();
@@ -113,4 +108,59 @@ class InvestorAuthController extends Controller
 
         return redirect()->route('login.pilih');
     }
+public function updateAkun(Request $request)
+{
+    if (session('auth_role') !== 'investor') {
+        return redirect()->route('login.pilih');
+    }
+    $investor = DB::table('investors')
+        ->where('id_investor', session('auth_id'))
+        ->first();
+
+    if (!$investor) {
+        return redirect()->route('login.pilih');
+    }
+    $validated = $request->validate([
+        'username' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('investors', 'username')
+                ->ignore($investor->id_investor, 'id_investor'),
+        ],
+        'password_lama' => ['required', 'string'],
+        'password_baru' => [
+            'nullable',
+            'string',
+            'min:8',
+            'confirmed',
+        ],
+    ]);
+    if (!Hash::check($validated['password_lama'], $investor->password)) {
+        return back()
+            ->withErrors([
+                'password_lama' => 'Password lama yang kamu masukkan salah.',
+            ])
+            ->withInput($request->only('username'));
+    }
+    $dataUpdate = [
+        'username' => $validated['username'],
+        'updated_at' => now(),
+    ];
+
+    if (!empty($validated['password_baru'])) {
+        $dataUpdate['password'] = Hash::make(
+            $validated['password_baru']
+        );
+    }
+    DB::table('investors')
+        ->where('id_investor', $investor->id_investor)
+        ->update($dataUpdate);
+
+    session(['auth_username' => $validated['username']]);
+
+    return redirect()
+        ->route('investor.profil')
+        ->with('success_akun', 'Pengaturan akun berhasil diperbarui.');
+}
 }

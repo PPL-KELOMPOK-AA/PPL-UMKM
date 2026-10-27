@@ -661,6 +661,72 @@
                 font-size: 25px;
             }
         }
+
+/* TOMBOL FORM PROFIL */
+.profile-form-actions {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.profile-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 10px 17px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.18s ease,
+                border-color 0.18s ease,
+                color 0.18s ease;
+}
+
+.profile-btn-primary {
+    background: var(--navy);
+    color: #fff;
+}
+
+.profile-btn-primary:hover {
+    background: var(--navy-light);
+    color: #fff;
+}
+
+.profile-btn-secondary {
+    background: #fff;
+    border-color: #dce2e9;
+    color: #536176;
+}
+
+.profile-btn-secondary:hover {
+    background: #f5f6f8;
+    border-color: #c8d0db;
+    color: var(--navy);
+}
+
+.profile-btn:focus-visible {
+    outline: 3px solid #b8ccef;
+    outline-offset: 2px;
+}
+
+@media (max-width: 480px) {
+    .profile-form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .profile-form-actions .profile-btn {
+        width: 100%;
+    }
+}
+
     </style>
 </head>
 
@@ -679,22 +745,26 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="#profil" class="sidebar-link">
+            <a href="{{ route('investor.profil') }}"
+            class="sidebar-link {{ request()->routeIs('investor.profil') ? 'active' : '' }}">
                 <i class="bi bi-person"></i>
                 <span>Profil Saya</span>
             </a>
 
-            <a href="#inovasi" class="sidebar-link">
+            <a href="#inovasi"
+               class="sidebar-link {{ request()->routeIs('investor.inovasi') ? 'active' : '' }}">
                 <i class="bi bi-lightbulb"></i>
                 <span>Daftar Inovasi</span>
             </a>
 
-            <a href="#penawaran" class="sidebar-link">
+            <a href="#penawaran"
+               class="sidebar-link {{ request()->routeIs('investor.penawaran') ? 'active' : '' }}">
                 <i class="bi bi-send"></i>
                 <span>Penawaran Saya</span>
             </a>
 
-            <a href="#investasi" class="sidebar-link">
+            <a href="#investasi"
+               class="sidebar-link {{ request()->routeIs('investor.investasi') ? 'active' : '' }}">
                 <i class="bi bi-graph-up-arrow"></i>
                 <span>Pantau Investasi</span>
             </a>
@@ -712,7 +782,10 @@
         </div>
     </aside>
 
-    {{-- KONTEN UTAMA --}}
+
+
+
+    
     <main class="dashboard-main">
         <header class="dashboard-navbar">
             <div class="navbar-left">

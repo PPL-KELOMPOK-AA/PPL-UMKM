@@ -612,10 +612,8 @@
 
     </aside>
 
-    {{-- MAIN --}}
     <div class="dashboard-main">
 
-        {{-- NAVBAR --}}
         <header class="dashboard-navbar">
 
             <div class="navbar-left">
@@ -647,7 +645,9 @@
 
         </header>
 
-        {{-- ISI HALAMAN --}}
+
+
+        
         <main class="dashboard-content">
             @yield('content')
         </main>

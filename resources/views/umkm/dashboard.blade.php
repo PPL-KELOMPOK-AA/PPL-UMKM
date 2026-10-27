@@ -10,20 +10,25 @@
     <p>Kelola inovasi usahamu, pantau penawaran investor, dan kembangkan peluang kerja sama.</p>
 </div>
 
+
 <div class="profile-alert">
     <div class="profile-alert-content">
         <div class="alert-icon">
-            <i class="bi bi-building-check"></i>
+            <i class="bi bi-shield-check"></i>
         </div>
 
         <div>
-            <h3>Lengkapi profil usahamu</h3>
-            <p>Lengkapi informasi usaha agar inovasimu lebih mudah ditemukan oleh investor dan mitra potensial.</p>
+            <h3>Status Akun</h3>
+            <p>
+                Status akun usahamu saat ini:
+                <strong>{{ $umkm->status_verifikasi ?? 'Menunggu Verifikasi' }}</strong>.
+                Silakan pantau status verifikasi akunmu secara berkala.
+            </p>
         </div>
     </div>
 
-    <a href="#profil" class="btn-dashboard">
-        Lengkapi Profil <i class="bi bi-arrow-right"></i>
+    <a href="{{ route('umkm.profil') }}" class="btn-dashboard">
+        Lihat Akun Saya <i class="bi bi-arrow-right"></i>
     </a>
 </div>
 

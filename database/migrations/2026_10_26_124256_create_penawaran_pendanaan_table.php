@@ -18,7 +18,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_proposal');
             $table->unsignedBigInteger('id_investor');
 
-            // Foreign key dengan penamaan yang lebih standar
             $table->foreign('id_proposal')
                 ->references('id_proposal')
                 ->on('proposals')

@@ -11,7 +11,6 @@
     <p>Pantau perkembangan UMKM, inovasi, dan kolaborasi dalam platform MitraUMKM.</p>
 </div>
 
-{{-- RINGKASAN STATISTIK --}}
 <div class="section-heading">
     <div>
         <h2>Ringkasan Platform</h2>
@@ -71,7 +70,6 @@
 
 </div>
 
-{{-- DATA INOVASI TERBARU --}}
 <div class="dashboard-card table-card">
     <div class="table-card-header">
         <div>
@@ -107,7 +105,6 @@
     </div>
 </div>
 
-{{-- AKTIVITAS KOLABORASI --}}
 <div class="dashboard-card table-card">
     <div class="table-card-header">
         <div>

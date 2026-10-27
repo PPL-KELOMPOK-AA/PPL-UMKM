@@ -390,7 +390,7 @@ $registerUrl = route('umkm.register');
 <div class="auth-page">
     <main class="auth-shell">
 
-        {{-- PANEL KIRI: IDENTITAS PLATFORM --}}
+        {{-- KIRI --}}
         <section class="auth-intro" style="background: #cfdef4;border-radius: 20px">
 
             <div class="intro-main">
@@ -416,7 +416,7 @@ $registerUrl = route('umkm.register');
 
         </section>
 
-        {{-- PANEL KANAN: FORM LOGIN --}}
+        {{-- KANAN --}}
         <section class="auth-form-panel">
 
             <h2 class="form-heading">Selamat datang, {{ $roleName }}</h2>

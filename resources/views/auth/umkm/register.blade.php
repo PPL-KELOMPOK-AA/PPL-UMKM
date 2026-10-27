@@ -238,7 +238,7 @@
 <div class="auth-page">
     <main class="auth-shell">
 
-        {{-- PANEL KIRI --}}
+        {{-- KIRI --}}
         <section class="auth-intro">
             <div class="intro-main">
                 <div class="intro-eyebrow">
@@ -261,7 +261,7 @@
             <div class="intro-bottom"></div>
         </section>
 
-        {{-- PANEL KANAN: FORM REGISTER UMKM --}}
+        {{-- KANAN --}}
         <section class="auth-form-panel">
 
             <h2 class="form-heading">Daftar Akun UMKM</h2>
