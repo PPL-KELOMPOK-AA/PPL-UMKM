@@ -751,8 +751,8 @@
                 <span>Profil Saya</span>
             </a>
 
-            <a href="#inovasi"
-               class="sidebar-link {{ request()->routeIs('investor.inovasi') ? 'active' : '' }}">
+            <a href="{{ route('investor.proposal') }}"
+               class="sidebar-link {{ request()->routeIs('investor.proposal*') ? 'active' : '' }}">
                 <i class="bi bi-lightbulb"></i>
                 <span>Daftar Inovasi</span>
             </a>
