@@ -2,6 +2,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 use App\Http\Controllers\ProposalController;
@@ -10,6 +11,8 @@ use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Investor\ProfilController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
+use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
+use App\Http\Controllers\Umkm\DashboardController;
 
 
 // ========================================== HALAMAN LOGIN AREA==========================================
@@ -68,8 +71,6 @@ Route::post('/register/investor', [InvestorAuthController::class, 'register'])
 
 // ========================================== HALAMAN DASHBOARD AREA==========================================
 
-use Illuminate\Support\Facades\DB;
-
 Route::get('/umkm/dashboard', function () {
     if (session('auth_role') !== 'umkm') {
         return redirect()->route('login.pilih');
@@ -118,6 +119,15 @@ Route::post('/investor/profil', [ProfilController::class,'update',])
 
 Route::post('/investor/akun', [InvestorAuthController::class,'updateAkun',])
     ->name('investor.akun.update');
+
+Route::get('/umkm/profil', [UmkmProfilController::class, 'index'])
+    ->name('umkm.profil');
+
+Route::get('/umkm/profil/edit', [UmkmProfilController::class, 'edit'])
+    ->name('umkm.profil.edit');
+
+Route::put('/umkm/profil/update', [UmkmProfilController::class, 'update'])
+    ->name('umkm.profil.update');
 
 // ========================================== HALAMAN PROPOSAL AREA==========================================
 
