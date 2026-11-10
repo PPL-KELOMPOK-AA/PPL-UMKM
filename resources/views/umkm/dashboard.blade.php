@@ -111,7 +111,7 @@
             <tbody>
                 <tr>
                     <td colspan="4" class="empty-state">
-                        <i class="bi bi-inbox"></i>
+                        <i class="bi bi-folder2-open"></i>
                         <p>Belum ada inovasi yang terdaftar.</p>
                     </td>
                 </tr>
