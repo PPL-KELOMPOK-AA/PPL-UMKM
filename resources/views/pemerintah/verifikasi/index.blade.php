@@ -143,7 +143,7 @@
                 @empty
                     <tr>
                         <td colspan="7" class="empty-state">
-                            <i class="bi bi-inbox fs-1 d-block mb-2 text-muted"></i>
+                            <i class="bi bi-folder2-open fs-1 d-block mb-2 text-muted"></i>
                             <h3>Belum Ada Data Investor</h3>
                             <p class="text-muted">Saat ini belum ada data permohonan verifikasi investor yang masuk.</p>
                         </td>

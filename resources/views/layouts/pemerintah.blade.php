@@ -400,6 +400,7 @@
             background: var(--blue-soft);
             color: var(--blue);
             font-size: 18px;
+            
         }
 
         .stat-value {
@@ -420,6 +421,7 @@
 
         .table-card {
             overflow: hidden;
+            margin-top: 20px;
         }
 
         .table-card-header {
