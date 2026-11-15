@@ -156,4 +156,3 @@ Route::prefix('pemerintah')->name('pemerintah.')->group(function () {
     Route::put('/verifikasi/investor/{id}', [VerifikasiController::class, 'verifikasiInvestor'])
         ->name('verifikasi.investor.update');
 });
-ssssgit push 
