@@ -2,15 +2,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-use App\Http\Controllers\ProposalController;
+use App\Http\Controllers\Investor\ProposalController as InvestorProposalController;
 use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Investor\ProfilController;
 use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
+use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
+use App\Http\Controllers\Umkm\DashboardController;
 
 
 // ========================================== HALAMAN LOGIN AREA==========================================
@@ -69,8 +72,6 @@ Route::post('/register/investor', [InvestorAuthController::class, 'register'])
 
 // ========================================== HALAMAN DASHBOARD AREA==========================================
 
-use Illuminate\Support\Facades\DB;
-
 Route::get('/umkm/dashboard', function () {
     if (session('auth_role') !== 'umkm') {
         return redirect()->route('login.pilih');
@@ -123,13 +124,29 @@ Route::post('/investor/akun', [InvestorAuthController::class,'updateAkun',])
 Route::get('/umkm/profil', [UmkmProfilController::class, 'index'])
     ->name('umkm.profil');
 
+Route::get('/umkm/profil/edit', [UmkmProfilController::class, 'edit'])
+    ->name('umkm.profil.edit');
+
+Route::put('/umkm/profil/update', [UmkmProfilController::class, 'update'])
+    ->name('umkm.profil.update');
+
 // ========================================== HALAMAN PROPOSAL AREA==========================================
 
-Route::get('/proposal/create', [ProposalController::class, 'create'])
-    ->name('proposal.create');
 
-Route::post('/proposal/ajukan', [ProposalController::class, 'ajukanProposal'])
-    ->name('proposal.ajukan');
+Route::prefix('investor')->name('investor.')->group(function () {
+    Route::get('/proposal', [InvestorProposalController::class, 'index'])
+            ->name('proposal');
+
+    Route::get('/proposal/{id}', [InvestorProposalController::class, 'show'])
+            ->name('proposal.show');
+
+    Route::get('/proposal/create', [InvestorProposalController::class, 'create'])
+        ->name('proposal.create');
+
+    Route::post('/proposal/ajukan', [InvestorProposalController::class, 'ajukanProposal'])
+        ->name('proposal.ajukan');
+});
+
 
 // ========================================== HALAMAN PEMERINTAH - VERIFIKASI INVESTOR (FR-14 / SCRUM-20) ==========================================
 Route::prefix('pemerintah')->name('pemerintah.')->group(function () {

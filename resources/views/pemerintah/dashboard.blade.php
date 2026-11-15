@@ -96,7 +96,7 @@
             <tbody>
                 <tr>
                     <td colspan="4" class="empty-state">
-                        <i class="bi bi-inbox"></i>
+                        <i class="bi bi-folder2-open"></i>
                         <p>Belum ada data inovasi untuk ditampilkan.</p>
                     </td>
                 </tr>
@@ -131,7 +131,7 @@
             <tbody>
                 <tr>
                     <td colspan="4" class="empty-state">
-                        <i class="bi bi-inbox"></i>
+                        <i class="bi bi-folder2-open"></i>
                         <p>Belum ada data kolaborasi untuk ditampilkan.</p>
                     </td>
                 </tr>
