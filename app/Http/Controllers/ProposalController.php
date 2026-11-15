@@ -26,7 +26,7 @@ class ProposalController extends Controller
 
     
         Proposal::create([
-            'id_UMKM'           => 1,
+            'id_UMKM'           => session('auth_id') ?? 1,
             'judul'             => $request->judul,
             'deskripsi_inovasi' => $request->deskripsi_inovasi,
             'dana_dibutuhkan'   => $request->dana_dibutuhkan,

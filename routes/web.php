@@ -10,6 +10,7 @@ use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Investor\ProfilController;
+use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
 use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
 use App\Http\Controllers\Umkm\DashboardController;
