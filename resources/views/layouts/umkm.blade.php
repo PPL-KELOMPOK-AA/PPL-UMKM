@@ -587,12 +587,11 @@
                 <span>Profil Usaha</span>
             </a>
 
-            <a href="{{ route('proposal.create') }}"
-               class="sidebar-link {{ request()->routeIs('proposal.*') ? 'active' : '' }}">
+            <a href="{{ route('umkm.proposal.create') }}"
+            class="sidebar-link {{ request()->routeIs('umkm.proposal.*') ? 'active' : '' }}">
                 <i class="bi bi-file-earmark-plus"></i>
                 <span>Ajukan Proposal</span>
             </a>
-
             <a href="#inovasi"
                class="sidebar-link">
                 <i class="bi bi-lightbulb"></i>
