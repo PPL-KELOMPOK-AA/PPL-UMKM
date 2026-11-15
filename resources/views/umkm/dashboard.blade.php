@@ -10,7 +10,6 @@
     <p>Kelola inovasi usahamu, pantau penawaran investor, dan kembangkan peluang kerja sama.</p>
 </div>
 
-
 <div class="profile-alert">
     <div class="profile-alert-content">
         <div class="alert-icon">
@@ -27,7 +26,7 @@
         </div>
     </div>
 
-    <a href="{{ Route::has('umkm.profil') ? route('umkm.profil') : '#profil' }}" class="btn-dashboard">
+    <a href="{{ route('umkm.profil') }}" class="btn-dashboard">
         Lihat Akun Saya <i class="bi bi-arrow-right"></i>
     </a>
 </div>
@@ -49,7 +48,6 @@
                     <i class="bi bi-lightbulb"></i>
                 </div>
             </div>
-
             <h3 class="stat-value">0</h3>
             <p class="stat-description">Total inovasi yang telah kamu buat.</p>
         </div>
@@ -63,7 +61,6 @@
                     <i class="bi bi-graph-up-arrow"></i>
                 </div>
             </div>
-
             <h3 class="stat-value">0</h3>
             <p class="stat-description">Inovasi yang sedang dalam proses kerja sama.</p>
         </div>
@@ -77,7 +74,6 @@
                     <i class="bi bi-handshake"></i>
                 </div>
             </div>
-
             <h3 class="stat-value">0</h3>
             <p class="stat-description">Penawaran yang masuk untuk inovasimu.</p>
         </div>
@@ -92,7 +88,7 @@
             <p>Pantau inovasi yang telah kamu daftarkan.</p>
         </div>
 
-        <a href="{{ route('proposal.create') }}" class="btn-dashboard">
+        <a href="{{ route('umkm.proposal.create') }}" class="btn-dashboard">
             Tambah Inovasi <i class="bi bi-plus-lg"></i>
         </a>
     </div>
