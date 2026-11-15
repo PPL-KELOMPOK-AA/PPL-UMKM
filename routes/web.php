@@ -9,6 +9,7 @@ use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Investor\ProfilController;
+use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
 
 
@@ -118,6 +119,9 @@ Route::post('/investor/profil', [ProfilController::class,'update',])
 
 Route::post('/investor/akun', [InvestorAuthController::class,'updateAkun',])
     ->name('investor.akun.update');
+
+Route::get('/umkm/profil', [UmkmProfilController::class, 'index'])
+    ->name('umkm.profil');
 
 // ========================================== HALAMAN PROPOSAL AREA==========================================
 

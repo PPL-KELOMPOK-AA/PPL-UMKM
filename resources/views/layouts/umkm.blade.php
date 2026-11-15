@@ -581,10 +581,16 @@
                 <span>Dashboard</span>
             </a>
 
-            <a href="#profil"
-               class="sidebar-link">
+            <a href="{{ route('umkm.profil') }}"
+               class="sidebar-link {{ request()->routeIs('umkm.profil') ? 'active' : '' }}">
                 <i class="bi bi-person"></i>
                 <span>Profil Usaha</span>
+            </a>
+
+            <a href="{{ route('proposal.create') }}"
+               class="sidebar-link {{ request()->routeIs('proposal.*') ? 'active' : '' }}">
+                <i class="bi bi-file-earmark-plus"></i>
+                <span>Ajukan Proposal</span>
             </a>
 
             <a href="#inovasi"

@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <a href="{{ route('umkm.profil') }}" class="btn-dashboard">
+    <a href="{{ Route::has('umkm.profil') ? route('umkm.profil') : '#profil' }}" class="btn-dashboard">
         Lihat Akun Saya <i class="bi bi-arrow-right"></i>
     </a>
 </div>
@@ -92,7 +92,7 @@
             <p>Pantau inovasi yang telah kamu daftarkan.</p>
         </div>
 
-        <a href="#inovasi" class="btn-dashboard">
+        <a href="{{ route('proposal.create') }}" class="btn-dashboard">
             Tambah Inovasi <i class="bi bi-plus-lg"></i>
         </a>
     </div>
