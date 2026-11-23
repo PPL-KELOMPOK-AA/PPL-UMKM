@@ -756,9 +756,8 @@
                 <i class="bi bi-lightbulb"></i>
                 <span>Daftar Inovasi</span>
             </a>
-
-            <a href="#penawaran"
-               class="sidebar-link {{ request()->routeIs('investor.penawaran') ? 'active' : '' }}">
+            <a href="{{ route('investor.penawaran.index') }}"
+            class="sidebar-link {{ request()->routeIs('investor.penawaran.*') ? 'active' : '' }}">
                 <i class="bi bi-send"></i>
                 <span>Penawaran Saya</span>
             </a>
