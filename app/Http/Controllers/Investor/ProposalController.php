@@ -32,9 +32,22 @@ class ProposalController extends Controller
         if ($request->filled('bidang')) {
             $query->where('umkms.bidang_usaha', $request->bidang);
         }
+
+        $sudahDiajukan = DB::table('penawaran_pendanaans')
+        ->where('id_investor', session('auth_id'))
+        ->pluck('id_proposal')
+        ->toArray();
+
+        $tab = request('tab', 'belum'); // belum | sudah | semua
+
+        if ($tab === 'belum') {
+            $query->whereNotIn('proposals.id_proposal', $sudahDiajukan);
+        } elseif ($tab === 'sudah') {
+            $query->whereIn('proposals.id_proposal', $sudahDiajukan);
+        }
+        
         $proposals = $query->paginate(10)->withQueryString();
-       
-        return view('investor.proposal.index', compact('proposals', 'bidangList', 'danaInvestor'));
+        return view('investor.proposal.index', compact('proposals', 'bidangList', 'danaInvestor', 'sudahDiajukan', 'tab'));
     }
 
     public function show($id)
@@ -48,6 +61,11 @@ class ProposalController extends Controller
             ->where('proposals.id_proposal', $id)
             ->firstOrFail();
 
-        return view('investor.proposal.show', compact('proposal', 'danaInvestor'));
+        $sudahDiajukan = DB::table('penawaran_pendanaans')
+        ->where('id_investor', session('auth_id'))
+        ->where('id_proposal', $id)
+        ->exists();
+
+        return view('investor.proposal.show', compact('proposal', 'danaInvestor', 'sudahDiajukan'));
     }
 }

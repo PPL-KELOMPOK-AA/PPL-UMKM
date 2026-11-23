@@ -244,8 +244,11 @@
 
                     @php $cukup = $danaInvestor >= $proposal->dana_dibutuhkan; @endphp
 
-                    @if ($cukup)
-                        <a href="#" class="btn-dashboard w-100">Ajukan penawaran</a>
+                    @if ($sudahDiajukan)
+                        <button type="button" class="btn-dashboard btn-off w-100" disabled>Ajukan penawaran</button>
+                        <p class="side-note">Kamu sudah mengajukan penawaran untuk proposal ini.</p>
+                    @elseif ($cukup)
+                        <a href="{{ route('investor.penawaran.create', $proposal->id_proposal) }}" class="btn-dashboard w-100">Ajukan penawaran</a>
                     @else
                         <button type="button" class="btn-dashboard btn-off w-100" disabled>Ajukan penawaran</button>
                         <p class="side-warn">
