@@ -25,4 +25,8 @@ class Proposal extends Model
     {
         return $this->belongsTo(Umkm::class, 'id_UMKM', 'id_UMKM');
     }
+    public function penawaran()
+{
+    return $this->hasMany(PenawaranPendanaan::class, 'id_proposal', 'id_proposal');
+}
 }
