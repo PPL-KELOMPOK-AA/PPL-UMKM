@@ -240,16 +240,19 @@
 
                 <div class="dashboard-card side-card">
                     <div class="side-label">Dana dibutuhkan</div>
-                    <div class="side-dana">Rp {{ number_format($proposal->dana_dibutuhkan, 0, ',', '.') }}</div>
+                    <div class="side-dana">Rp{{ number_format($proposal->dana_dibutuhkan, 0, ',', '.') }}</div>
 
                     @php $cukup = $danaInvestor >= $proposal->dana_dibutuhkan; @endphp
 
-                    @if ($cukup)
-                        <a href="#" class="btn-dashboard w-100">Ajukan penawaran</a>
+                    @if ($sudahDiajukan)
+                        <button type="button" class="btn-dashboard btn-off w-100" disabled>Ajukan penawaran</button>
+                        <p class="side-note">Kamu sudah mengajukan penawaran untuk proposal ini.</p>
+                    @elseif ($cukup)
+                        <a href="{{ route('investor.penawaran.create', $proposal->id_proposal) }}" class="btn-dashboard w-100">Ajukan penawaran</a>
                     @else
                         <button type="button" class="btn-dashboard btn-off w-100" disabled>Ajukan penawaran</button>
                         <p class="side-warn">
-                            Dana tersedia kamu Rp {{ number_format($danaInvestor, 0, ',', '.') }}, belum cukup untuk
+                            Dana tersedia kamu Rp{{ number_format($danaInvestor, 0, ',', '.') }}, belum cukup untuk
                             proposal ini.
                         </p>
                     @endif

@@ -1,18 +1,18 @@
 
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\DB;
-
-use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Auth\InvestorAuthController;
 use App\Http\Controllers\Auth\PemerintahAuthController;
-use App\Http\Controllers\Investor\ProposalController as InvestorProposalController;
-use App\Http\Controllers\Umkm\ProposalController as UmkmProposalController;
+use App\Http\Controllers\Auth\UmkmAuthController;
+use App\Http\Controllers\Investor\PenawaranController as InvestorPenawaranController;
 use App\Http\Controllers\Investor\ProfilController;
-use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
 use App\Http\Controllers\Umkm\InovasiController;
+use App\Http\Controllers\Investor\ProposalController as InvestorProposalController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
+use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
+use App\Http\Controllers\Umkm\ProposalController as UmkmProposalController;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Route;
 
 // ========================================== HALAMAN LOGIN ==========================================
 
@@ -75,7 +75,7 @@ Route::get('/umkm/dashboard', function () {
         ->where('id_UMKM', session('auth_id'))
         ->first();
 
-    if (!$umkm) {
+    if (! $umkm) {
         return redirect()->route('login.pilih');
     }
 
@@ -91,7 +91,7 @@ Route::get('/investor/dashboard', function () {
         ->where('id_investor', session('auth_id'))
         ->first();
 
-    if (!$investor) {
+    if (! $investor) {
         return redirect()->route('login.pilih');
     }
 
@@ -154,6 +154,7 @@ Route::prefix('investor')->name('investor.')->group(function () {
         ->name('proposal');
 
     Route::get('/proposal/{id}', [InvestorProposalController::class, 'show'])
+        ->whereNumber('id')
         ->name('proposal.show');
 
     Route::get('/proposal/create', [InvestorProposalController::class, 'create'])
@@ -161,7 +162,14 @@ Route::prefix('investor')->name('investor.')->group(function () {
 
     Route::post('/proposal/ajukan', [InvestorProposalController::class, 'ajukanProposal'])
         ->name('proposal.ajukan');
+    Route::get('/proposal/{id}/penawaran', [InvestorPenawaranController::class, 'create'])
+        ->name('penawaran.create');
 
+    Route::post('/proposal/{id}/penawaran', [InvestorPenawaranController::class, 'store'])
+        ->name('penawaran.store');
+
+    Route::get('/penawaran', [InvestorPenawaranController::class, 'index'])
+        ->name('penawaran.index');
 });
 
 // ========================================== VERIFIKASI INVESTOR ==========================================

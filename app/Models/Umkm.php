@@ -6,8 +6,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class Umkm extends Authenticatable
 {
-    protected $table = 'umkm';
-    protected $primaryKey = 'id_umkm';
+    protected $table = 'umkms';
+    protected $primaryKey = 'id_UMKM';
     public $timestamps = false;
 
     protected $fillable = [
@@ -20,16 +20,16 @@ class Umkm extends Authenticatable
 
     public function proposals()
     {
-        return $this->hasMany(Proposal::class, 'id_umkm', 'id_umkm');
+        return $this->hasMany(Proposal::class, 'id_UMKM', 'id_UMKM');
     }
 
     public function kerjaSama()
     {
-        return $this->hasMany(KerjaSamaPendanaan::class, 'id_umkm', 'id_umkm');
+        return $this->hasMany(KerjaSamaPendanaan::class, 'id_UMKM', 'id_UMKM');
     }
 
     public function infografis()
     {
-        return $this->hasMany(InfografisProgres::class, 'id_umkm', 'id_umkm');
+        return $this->hasMany(InfografisProgres::class, 'id_UMKM', 'id_UMKM');
     }
 }

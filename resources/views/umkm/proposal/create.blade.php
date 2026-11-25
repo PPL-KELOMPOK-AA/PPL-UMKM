@@ -314,13 +314,13 @@
                             required>
                     </div>
                     <div id="currencyPreview" class="currency-live-preview">
-                        <i class="bi bi-tag-fill me-1"></i> Terbilang: <span id="currencyText">Rp 0</span>
+                        <i class="bi bi-tag-fill me-1"></i> Terbilang: <span id="currencyText">Rp0</span>
                     </div>
                     @error('dana_dibutuhkan')
                         <div class="invalid-feedback d-block mt-1">{{ $message }}</div>
                     @else
                         <div class="form-text text-muted" style="font-size: 12px;">
-                            Estimasi jumlah modal kerja atau investasi yang kamu butuhkan dari investor (minimal Rp 1.000).
+                            Estimasi jumlah modal kerja atau investasi yang kamu butuhkan dari investor (minimal Rp1.000).
                         </div>
                     @enderror
                 </div>
@@ -379,6 +379,12 @@
                         <span class="badge bg-light text-muted border px-2.5 py-1" style="font-size: 11px;">
                             Ukuran berkas maksimal 10 MB
                         </span>
+                    </div>
+
+                    {{-- Pesan Error Validasi Klien (Jika > 10MB atau Format Salah) --}}
+                    <div id="fileClientError" class="alert alert-danger d-none align-items-center mt-3 mb-0" style="border-radius: 10px; font-size: 12.5px; padding: 11px 14px; background: #fff1f0; border: 1px solid #ffa39e; color: #cf1322;">
+                        <i class="bi bi-exclamation-triangle-fill me-2 fs-6 flex-shrink-0"></i>
+                        <span id="fileClientErrorMessage"></span>
                     </div>
 
                     {{-- Selected File Preview --}}
@@ -539,6 +545,84 @@
         const fileSizePreview = document.getElementById('fileSizePreview');
         const filePreviewIcon = document.getElementById('filePreviewIcon');
         const removeFileBtn = document.getElementById('removeFileBtn');
+        const fileClientError = document.getElementById('fileClientError');
+        const fileClientErrorMessage = document.getElementById('fileClientErrorMessage');
+
+        const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB (10.485.760 bytes)
+        const ALLOWED_EXTENSIONS = ['pdf', 'docx'];
+
+        function showFileError(msg) {
+            if (fileClientError && fileClientErrorMessage) {
+                fileClientErrorMessage.textContent = msg;
+                fileClientError.classList.remove('d-none');
+                fileClientError.classList.add('d-flex');
+            }
+            if (dropzoneArea) {
+                dropzoneArea.style.borderColor = '#cf1322';
+                dropzoneArea.style.backgroundColor = '#fff1f0';
+            }
+        }
+
+        function hideFileError() {
+            if (fileClientError) {
+                fileClientError.classList.add('d-none');
+                fileClientError.classList.remove('d-flex');
+            }
+            if (dropzoneArea) {
+                dropzoneArea.style.borderColor = '';
+                dropzoneArea.style.backgroundColor = '';
+            }
+        }
+
+        function resetFileInput() {
+            if (fileInput) {
+                fileInput.value = '';
+            }
+            if (filePreviewCard) {
+                filePreviewCard.style.display = 'none';
+            }
+        }
+
+        // Validasi instan saat berkas dipilih atau di-drop
+        function validateAndPreviewFile(file) {
+            hideFileError();
+
+            if (!file) {
+                resetFileInput();
+                return false;
+            }
+
+            const ext = file.name.split('.').pop().toLowerCase();
+
+            // 1. Cek format ekstensi
+            if (!ALLOWED_EXTENSIONS.includes(ext)) {
+                resetFileInput();
+                showFileError('Format berkas tidak didukung (.' + ext + '). Berkas ditolak! Harap pilih berkas dengan format .PDF atau .DOCX.');
+                return false;
+            }
+
+            // 2. Cek batas ukuran maksimal 10 mb
+            if (file.size > MAX_FILE_SIZE) {
+                const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+                resetFileInput();
+                showFileError('Ukuran berkas melebihi batas maksimal 10 MB (' + sizeInMB + ' MB). Berkas ditolak dan tidak dapat dimasukkan ke form!');
+                return false;
+            }
+
+            // Jika valid, tampilkan pratinjau berkas
+            fileNamePreview.textContent = file.name;
+            const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
+            fileSizePreview.textContent = `${sizeInMB} MB`;
+
+            if (ext === 'pdf') {
+                filePreviewIcon.innerHTML = '<i class="bi bi-file-earmark-pdf-fill text-danger"></i>';
+            } else {
+                filePreviewIcon.innerHTML = '<i class="bi bi-file-earmark-word-fill text-primary"></i>';
+            }
+
+            filePreviewCard.style.display = 'flex';
+            return true;
+        }
 
         // Format live Rupiah
         const danaInput = document.getElementById('dana_dibutuhkan');
@@ -547,7 +631,7 @@
 
         function formatRupiah(val) {
             if (!val || isNaN(val)) return 'Rp 0';
-            return 'Rp ' + Number(val).toLocaleString('id-ID');
+            return 'Rp' + Number(val).toLocaleString('id-ID');
         }
 
         function updateCurrencyPreview() {
@@ -565,31 +649,13 @@
             updateCurrencyPreview();
         }
 
-        // Handle File Select
-        function updateFilePreview(file) {
-            if (!file) {
-                filePreviewCard.style.display = 'none';
-                return;
-            }
-
-            fileNamePreview.textContent = file.name;
-            const sizeInMB = (file.size / (1024 * 1024)).toFixed(2);
-            fileSizePreview.textContent = `${sizeInMB} MB`;
-
-            const ext = file.name.split('.').pop().toLowerCase();
-            if (ext === 'pdf') {
-                filePreviewIcon.innerHTML = '<i class="bi bi-file-earmark-pdf-fill text-danger"></i>';
-            } else {
-                filePreviewIcon.innerHTML = '<i class="bi bi-file-earmark-word-fill text-primary"></i>';
-            }
-
-            filePreviewCard.style.display = 'flex';
-        }
-
         if (fileInput) {
             fileInput.addEventListener('change', function () {
-                if (fileInput.files.length > 0) {
-                    updateFilePreview(fileInput.files[0]);
+                if (fileInput.files && fileInput.files.length > 0) {
+                    const valid = validateAndPreviewFile(fileInput.files[0]);
+                    if (!valid) {
+                        fileInput.value = '';
+                    }
                 }
             });
         }
@@ -597,8 +663,8 @@
         if (removeFileBtn) {
             removeFileBtn.addEventListener('click', function (e) {
                 e.stopPropagation();
-                fileInput.value = '';
-                filePreviewCard.style.display = 'none';
+                resetFileInput();
+                hideFileError();
             });
         }
 
@@ -622,11 +688,30 @@
         dropzoneArea.addEventListener('drop', function (e) {
             const dt = e.dataTransfer;
             const files = dt.files;
-            if (files.length > 0) {
-                fileInput.files = files;
-                updateFilePreview(files[0]);
+            if (files && files.length > 0) {
+                const valid = validateAndPreviewFile(files[0]);
+                if (valid) {
+                    fileInput.files = files;
+                } else {
+                    resetFileInput();
+                }
             }
         });
+
+        // Pengamanan saat form disubmit
+        const proposalForm = document.getElementById('proposalForm');
+        if (proposalForm) {
+            proposalForm.addEventListener('submit', function (e) {
+                if (fileInput.files && fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    if (file.size > MAX_FILE_SIZE) {
+                        e.preventDefault();
+                        showFileError('Ukuran berkas melebihi batas 10 MB. Pengajuan ditolak!');
+                        return false;
+                    }
+                }
+            });
+        }
     });
 </script>
 

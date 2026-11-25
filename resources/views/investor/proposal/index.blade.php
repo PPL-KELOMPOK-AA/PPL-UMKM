@@ -13,6 +13,30 @@
         padding: 14px;
         margin-bottom: 14px;
     }
+    .p-done {
+    color: #1f7a45;
+    font-size: 12px;
+    font-weight: 600;
+}
+    .tab-bar {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 14px;
+    border-bottom: 1px solid var(--border);
+}
+    .tab-item {
+        padding: 10px 16px;
+        margin-bottom: -1px;
+        border-bottom: 2px solid transparent;
+        color: var(--text-muted);
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .tab-item:hover { color: var(--navy); }
+    .tab-item.active {
+        color: var(--navy);
+        border-bottom-color: var(--blue);
+    }
     .search-box {
         position: relative;
         flex: 1;
@@ -145,8 +169,18 @@
     <p>Proposal dari UMKM yang sedang mencari pendanaan.</p>
 </div>
 
+<div class="tab-bar">
+    <a href="{{ request()->fullUrlWithQuery(['tab' => 'belum', 'page' => null]) }}"
+       class="tab-item {{ $tab === 'belum' ? 'active' : '' }}">Belum diajukan</a>
+    <a href="{{ request()->fullUrlWithQuery(['tab' => 'sudah', 'page' => null]) }}"
+       class="tab-item {{ $tab === 'sudah' ? 'active' : '' }}">Sudah diajukan</a>
+    <a href="{{ request()->fullUrlWithQuery(['tab' => 'semua', 'page' => null]) }}"
+       class="tab-item {{ $tab === 'semua' ? 'active' : '' }}">Semua</a>
+</div>
+
 {{-- Cari, filt --}}
 <form method="GET" class="dashboard-card proposal-toolbar">
+    <input type="hidden" name="tab" value="{{ $tab }}">
     <div class="search-box">
         <i class="bi bi-search"></i>
         <input type="text" name="q" value="{{ request('q') }}" placeholder="Cari judul proposal">
@@ -172,11 +206,19 @@
 @if ($proposals->count() > 0)
     <div class="proposal-grid">
         @foreach ($proposals as $p)
-    @php $cukup = $danaInvestor >= $p->dana_dibutuhkan; @endphp
+    @php
+        $cukup    = $danaInvestor >= $p->dana_dibutuhkan;
+        $diajukan = in_array($p->id_proposal, $sudahDiajukan);
+        $aktif    = $diajukan || $cukup;
 
-    <a href="{{ $cukup ? route('investor.proposal.show', $p->id_proposal) : '#' }}"
-       class="dashboard-card p-card {{ $cukup ? '' : 'p-card-off' }}"
-       @if (!$cukup) tabindex="-1" aria-disabled="true" @endif>
+        $link = $diajukan
+            ? route('investor.penawaran.index')
+            : ($cukup ? route('investor.proposal.show', $p->id_proposal) : '#');
+    @endphp
+
+    <a href="{{ $link }}"
+       class="dashboard-card p-card {{ $aktif ? '' : 'p-card-off' }}"
+       @if (!$aktif) tabindex="-1" aria-disabled="true" @endif>
 
         <div class="p-top">
             <span class="p-umkm">{{ $p->nama_usaha }}</span>
@@ -189,10 +231,12 @@
         <div class="p-foot">
             <div>
                 <div class="p-label">Dana dibutuhkan</div>
-                <div class="p-dana">Rp {{ number_format($p->dana_dibutuhkan, 0, ',', '.') }}</div>
+                <div class="p-dana">Rp{{ number_format($p->dana_dibutuhkan, 0, ',', '.') }}</div>
             </div>
 
-            @if ($cukup)
+            @if ($diajukan)
+                <div class="p-done">Sudah kamu ajukan</div>
+            @elseif ($cukup)
                 <div class="p-date">
                     {{ \Carbon\Carbon::parse($p->tanggal_pengajuan)->format('d M Y') }}
                 </div>
@@ -200,13 +244,18 @@
                 <div class="p-warn">Dana kamu belum cukup</div>
             @endif
         </div>
-
     </a>
-@endforeach
+        @endforeach
     </div>
 @else
     <div class="dashboard-card empty-box">
-        Tidak ada proposal yang cocok dengan pencarianmu.
+        @if ($tab === 'sudah')
+            Kamu belum mengajukan penawaran ke proposal mana pun.
+        @elseif ($tab === 'belum')
+            Semua proposal sudah kamu ajukan.
+        @else
+            Tidak ada proposal yang cocok dengan pencarianmu.
+        @endif
     </div>
 @endif
 
