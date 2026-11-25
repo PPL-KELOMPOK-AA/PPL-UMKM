@@ -592,8 +592,8 @@
                 <i class="bi bi-file-earmark-plus"></i>
                 <span>Ajukan Proposal</span>
             </a>
-            <a href="#inovasi"
-               class="sidebar-link">
+            <a href="{{ route('umkm.inovasi.index') }}"
+                class="sidebar-link {{ request()->routeIs('umkm.inovasi.*') ? 'active' : '' }}">
                 <i class="bi bi-lightbulb"></i>
                 <span>Inovasi Saya</span>
             </a>

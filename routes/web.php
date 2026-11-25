@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\PemerintahAuthController;
 use App\Http\Controllers\Auth\UmkmAuthController;
 use App\Http\Controllers\Investor\PenawaranController as InvestorPenawaranController;
 use App\Http\Controllers\Investor\ProfilController;
+use App\Http\Controllers\Umkm\InovasiController;
 use App\Http\Controllers\Investor\ProposalController as InvestorProposalController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
 use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
@@ -119,6 +120,15 @@ Route::get('/umkm/profil/edit', [UmkmProfilController::class, 'edit'])
 
 Route::put('/umkm/profil/update', [UmkmProfilController::class, 'update'])
     ->name('umkm.profil.update');
+
+// ========================================== KATALOG INOVASI UMKM ==========================================
+
+Route::prefix('umkm')->name('umkm.')->group(function () {
+
+    Route::get('/inovasi', [InovasiController::class, 'index'])
+        ->name('inovasi.index');
+
+});
 
 // ========================================== PROPOSAL UMKM ==========================================
 
