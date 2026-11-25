@@ -11,6 +11,7 @@ use App\Http\Controllers\Investor\ProposalController as InvestorProposalControll
 use App\Http\Controllers\Umkm\ProposalController as UmkmProposalController;
 use App\Http\Controllers\Investor\ProfilController;
 use App\Http\Controllers\Umkm\ProfilController as UmkmProfilController;
+use App\Http\Controllers\Umkm\InovasiController;
 use App\Http\Controllers\Pemerintah\VerifikasiController;
 
 // ========================================== HALAMAN LOGIN ==========================================
@@ -119,6 +120,15 @@ Route::get('/umkm/profil/edit', [UmkmProfilController::class, 'edit'])
 
 Route::put('/umkm/profil/update', [UmkmProfilController::class, 'update'])
     ->name('umkm.profil.update');
+
+// ========================================== KATALOG INOVASI UMKM ==========================================
+
+Route::prefix('umkm')->name('umkm.')->group(function () {
+
+    Route::get('/inovasi', [InovasiController::class, 'index'])
+        ->name('inovasi.index');
+
+});
 
 // ========================================== PROPOSAL UMKM ==========================================
 
