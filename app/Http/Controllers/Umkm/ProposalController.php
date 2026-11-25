@@ -21,6 +21,15 @@ class ProposalController extends Controller
             'deskripsi_inovasi' => 'required|string',
             'dana_dibutuhkan'   => 'required|numeric|min:1000',
             'file_proposal'     => 'required|file|mimes:pdf,docx|max:10240', // Maksimal file 10MB
+        ], [
+            'file_proposal.required' => 'Dokumen proposal wajib diunggah.',
+            'file_proposal.file'     => 'Berkas yang diunggah tidak valid.',
+            'file_proposal.mimes'    => 'Format dokumen harus berupa berkas PDF (.pdf) atau Word (.docx).',
+            'file_proposal.max'      => 'Ukuran dokumen proposal melebihi batas maksimal 10 MB. Berkas ditolak.',
+            'judul.required'         => 'Judul proyek inovasi wajib diisi.',
+            'deskripsi_inovasi.required' => 'Deskripsi inovasi wajib diisi.',
+            'dana_dibutuhkan.required'   => 'Target dana yang dibutuhkan wajib diisi.',
+            'dana_dibutuhkan.min'        => 'Target dana minimal adalah Rp 1.000.',
         ]);
 
         $filePath = $request->file('file_proposal')->store('proposals', 'public');
