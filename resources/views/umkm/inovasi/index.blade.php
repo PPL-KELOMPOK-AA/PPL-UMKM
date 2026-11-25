@@ -142,22 +142,122 @@
     </div>
 
     {{-- TAB PENAWARAN INVESTOR --}}
-    <div class="tab-pane fade"
-         id="penawaran"
-         role="tabpanel">
+<div class="tab-pane fade"
+     id="penawaran"
+     role="tabpanel">
 
-        <div class="bg-white rounded-3 border p-5 text-center">
-            <i class="bi bi-handshake text-secondary"
-               style="font-size: 45px;"></i>
+    <div class="bg-white rounded-3 border p-4">
 
-            <h5 class="mt-3">Penawaran Investor</h5>
+        <h5 class="mb-3">
+            <i class="bi bi-handshake me-2"></i>
+            Penawaran Investor
+        </h5>
 
-            <p class="text-muted mb-0">
-                Halaman penawaran investor belum tersedia.
-                Fitur ini akan diintegrasikan dengan halaman
-                yang sedang dikembangkan oleh tim.
-            </p>
-        </div>
+        @forelse ($proposals as $proposal)
+
+            <div class="border rounded-3 p-3 mb-3">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    <div>
+                        <h6 class="mb-1">
+                            {{ $proposal->judul }}
+                        </h6>
+
+                        <small class="text-muted">
+                            Tanggal pengajuan:
+                            {{ $proposal->tanggal_pengajuan }}
+                        </small>
+                    </div>
+
+                    <span class="badge bg-primary">
+                        {{ $proposal->jumlah_penawaran }} Penawaran
+                    </span>
+
+                </div>
+
+                <hr>
+
+                <button
+                    class="btn btn-outline-primary btn-sm"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#penawar-{{ $proposal->id_proposal }}">
+
+                    <i class="bi bi-eye me-1"></i>
+                    Lihat Penawar
+
+                </button>
+
+                <div class="collapse mt-3"
+                     id="penawar-{{ $proposal->id_proposal }}">
+
+                    @php
+                        $daftarPenawar = $penawarans->get($proposal->id_proposal, collect());
+                    @endphp
+
+                    @forelse ($daftarPenawar as $penawaran)
+
+                        <div class="border rounded-3 p-3 mb-2">
+
+                            <h6 class="mb-2">
+                                {{ $penawaran->nama_investor }}
+                            </h6>
+
+                            <p class="mb-1">
+                                <strong>Jumlah dana:</strong>
+                                Rp {{ number_format($penawaran->jumlah_dana, 0, ',', '.') }}
+                            </p>
+
+                            <p class="mb-1">
+                                <strong>Tanggal penawaran:</strong>
+                                {{ $penawaran->tanggal_penawaran }}
+                            </p>
+
+                            <p class="mb-2">
+                                <strong>Persyaratan:</strong>
+                                {{ $penawaran->persyaratan }}
+                            </p>
+
+                            <strong>Status:</strong>
+
+                            @if ($penawaran->status === 'diterima')
+                                <span class="badge bg-success">Diterima</span>
+                            @elseif ($penawaran->status === 'ditolak')
+                                <span class="badge bg-danger">Ditolak</span>
+                            @else
+                                <span class="badge bg-warning text-dark">Menunggu</span>
+                            @endif
+
+                        </div>
+
+                    @empty
+
+                        <p class="text-muted mb-0">
+                            Belum ada investor yang mengajukan penawaran.
+                        </p>
+
+                    @endforelse
+
+                </div>
+
+            </div>
+
+        @empty
+
+            <div class="text-center py-5">
+                <i class="bi bi-inbox text-secondary"
+                   style="font-size: 45px;"></i>
+
+                <h6 class="mt-3">Belum Ada Proposal</h6>
+
+                <p class="text-muted mb-0">
+                    Proposal yang kamu ajukan akan muncul di sini
+                    ketika tersedia.
+                </p>
+            </div>
+
+        @endforelse
 
     </div>
 
