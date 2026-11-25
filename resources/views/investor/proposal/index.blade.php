@@ -231,7 +231,7 @@
         <div class="p-foot">
             <div>
                 <div class="p-label">Dana dibutuhkan</div>
-                <div class="p-dana">Rp {{ number_format($p->dana_dibutuhkan, 0, ',', '.') }}</div>
+                <div class="p-dana">Rp{{ number_format($p->dana_dibutuhkan, 0, ',', '.') }}</div>
             </div>
 
             @if ($diajukan)
